@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { App } from './App';
-import { BaseLayout } from './components/BaseLayout';
+import { BaseLayout } from './Containers/BaseLayout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
