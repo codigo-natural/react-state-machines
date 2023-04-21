@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/react-state-machines/static/css/main.6b5d75d0.css",
+    "main.js": "/react-state-machines/static/js/main.f4265427.js",
+    "static/media/airport1.jpg": "/react-state-machines/static/media/airport1.6a7d9e57b62f011e013a.jpg",
+    "index.html": "/react-state-machines/index.html",
+    "main.6b5d75d0.css.map": "/react-state-machines/static/css/main.6b5d75d0.css.map",
+    "main.f4265427.js.map": "/react-state-machines/static/js/main.f4265427.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6b5d75d0.css",
+    "static/js/main.f4265427.js"
+  ]
+}
