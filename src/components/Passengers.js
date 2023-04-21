@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Passengers.css';
 
 export const Passengers = ({ state, send }) => {
+  const { passengers } = state.context;
   const [value, changeValue] = useState('');
 
   const onChangeInput = (e) => {
@@ -17,12 +18,11 @@ export const Passengers = ({ state, send }) => {
     send('ADD', { newPassenger: value})
     changeValue('');
   }
-  const { passengers } = state.context;
 
   return (
     <form onSubmit={submit} className='Passengers'>
       <p className='Passengers-title title'>Agrega a las personas que van a volar ✈️</p>
-      {passengers.map((person, idx) => <p className='text' key={`person-${idx}`}>{person}</p>)}
+      {passengers.map((passenger, idx) => <p className='text' key={`${passenger}${idx}`}>{passenger}</p>)}
       <input 
         id="name" 
         name="name" 
@@ -40,7 +40,7 @@ export const Passengers = ({ state, send }) => {
           Agregar Pasajero
         </button>
         <button
-          className='Passenger-pay button'
+          className={`Passenger-pay button ${passengers.length === 0 ? 'Passenger-disabled' : ''}`} 
           type="button"
           onClick={goToTicket}
         >

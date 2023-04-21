@@ -6,21 +6,21 @@ const fillCountries = {
   states: {
     loading: {
       invoke: {
-        id: 'getCountries',
+        id: "getCountries",
         src: () => fetchCountries,
         onDone: {
-          target: 'success',
+          target: "success",
           actions: assign({
             countries: (context, event) => event.data,
-          })
+          }),
         },
         onError: {
-          target: 'failure',
+          target: "failure",
           actions: assign({
-            error: 'fallo el request'
-          })
-        }
-      }
+            error: "fallo el request",
+          }),
+        },
+      },
     },
     success: {},
     failure: {
@@ -37,9 +37,9 @@ export const bookingMachine = createMachine(
     initial: "initial",
     context: {
       passengers: [],
-      selectedCountry: '',
+      selectedCountry: "",
       countries: [],
-      error: '',
+      error: "",
     },
     states: {
       initial: {
@@ -52,10 +52,10 @@ export const bookingMachine = createMachine(
       search: {
         on: {
           CONTINUE: {
-            target: 'passengers',
+            target: "passengers",
             actions: assign({
-              selectedCountry: (context, event) => event.selectedCountry
-            })
+              selectedCountry: (context, event) => event.selectedCountry,
+            }),
           },
           CANCEL: "initial",
         },
@@ -64,37 +64,49 @@ export const bookingMachine = createMachine(
       tickets: {
         after: {
           5000: {
-            target: 'initial',
-            initial: 'cleanContext',
-          }
+            target: "initial",
+            actions: "cleanContext",
+          },
         },
         on: {
-          FINISH: "initial"
+          FINISH: "initial",
         },
       },
       passengers: {
         on: {
-          DONE: "tickets",
+          DONE: {
+            target: "tickets",
+            cond: "moreThanOnePassenger",
+          },
           CANCEL: {
             target: "initial",
-            actions: 'cleanContext',
+            actions: "cleanContext",
           },
           ADD: {
-            target: 'passengers',
-            actions: assign(
-              (context, event) => context.passengers.push(event.newPassenger)
-            )
-          }
+            target: "passengers",
+            actions: "addPassenger",
+          },
         },
       },
     },
   },
   {
     actions: {
+      addPassenger: assign((context, event) =>
+        context.passengers.push(event.newPassenger)
+      ),
+      choiceSelectedCountry: assign({
+        selectedCountry: (context, event) => event.selectedCountry,
+      }),
       cleanContext: assign({
-        selectedCountry: '',
+        selectedCountry: "",
         passengers: [],
-      })
+      }),
+    },
+    guards: {
+      moreThanOnePassenger: (context) => {
+        return context.passengers.length > 0;
+      },
     },
   }
 );
